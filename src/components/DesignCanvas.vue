@@ -12,6 +12,7 @@
         direction="all"
         :x="module.x"
         :y="module.y"
+        :disabled="resizingId === module.id"
         :style="{ width: module.width + 'px', height: module.height + 'px' }"
         @change="onChange($event, module.id)"
         @longpress="remove(module.id)"
@@ -23,6 +24,8 @@
           class="resize-handle" 
           @touchstart.stop.prevent="startResize($event, module)" 
           @touchmove.stop.prevent="doResize($event, module)"
+          @touchend.stop.prevent="endResize"
+          @touchcancel.stop.prevent="endResize"
         >
         </view>
       </movable-view>
@@ -71,6 +74,11 @@ function doResize(e, module) {
   
   store.updateSize(module.id, initialSize.value.width + deltaX, initialSize.value.height + deltaY);
 }
+
+function endResize() {
+  resizingId.value = null;
+}
+
 
 function formatType(t) {
   if(t === 'sink') return "Sink";
