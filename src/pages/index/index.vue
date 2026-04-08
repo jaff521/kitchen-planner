@@ -15,10 +15,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useLayoutStore } from '@/store/layout';
 import DesignCanvas from '@/components/DesignCanvas.vue';
 import ModuleTray from '@/components/ModuleTray.vue';
+import { mockCallFunction } from '@/utils/mockCloud';
 
 const store = useLayoutStore();
 
@@ -27,7 +28,7 @@ const canSubmit = computed(() => store.modules.length > 0);
 function submitForReview() {
   if (!canSubmit.value) return;
   uni.showLoading({ title: 'Submitting...' });
-  uniCloud.callFunction({
+  mockCallFunction({
     name: 'submitLayout',
     data: {
       layout_data: store.modules

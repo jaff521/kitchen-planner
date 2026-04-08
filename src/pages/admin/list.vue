@@ -70,6 +70,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { mockCallFunction } from '@/utils/mockCloud';
 
 const layouts = ref([]);
 const loading = ref(true);
@@ -87,7 +88,7 @@ function setFilter(status) {
 
 function fetchLayouts() {
   loading.value = true;
-  uniCloud.callFunction({ name: 'reviewLayout', data: { action: 'list', statusFilter: currentFilter.value } }).then(res => {
+  mockCallFunction({ name: 'reviewLayout', data: { action: 'list', statusFilter: currentFilter.value } }).then(res => {
     if (res.result.code === 200) {
       layouts.value = res.result.data;
     }
@@ -117,7 +118,7 @@ function promptReject() {
 
 function handleAction(status, reject_reason = '') {
   uni.showLoading({ title: 'Processing' });
-  uniCloud.callFunction({
+  mockCallFunction({
     name: 'reviewLayout',
     data: {
       action: 'update',
