@@ -3,8 +3,11 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 
 // Local Simulation of uniCloud API to avoid HBuilderX cloud dependency block
-if (typeof uniCloud !== 'undefined') {
-  uniCloud.callFunction = async function(args) {
+if (typeof window !== 'undefined') {
+  if (typeof window.uniCloud === 'undefined') {
+    window.uniCloud = {};
+  }
+  window.uniCloud.callFunction = async function(args) {
     return new Promise((resolve) => {
       setTimeout(() => {
         let db = JSON.parse(localStorage.getItem('mockFloorPlans') || '[]');
