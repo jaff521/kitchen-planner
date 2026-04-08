@@ -4,8 +4,8 @@
 A mobile application built on `uni-app` (Vue 3) that allows users to create simple kitchen floor plans by dragging and dropping predefined modules (sinks, slop buckets, worktables, etc.) into a canvas area. The canvas automatically scales modules to fill a horizontal space perfectly. The layouts are submitted to a `uniCloud` backend where administrators can review and approve them via a `uni-admin` desktop dashboard.
 
 ## Context
-Target Users: Standard C2B or franchise reps creating quick equipment layouts for approval or quotation.
-Business Goal: Streamline the layout planning process on mobile and centralize approvals in a standard admin backend.
+Target Users: Restaurant owners or food business applicants who need to submit a kitchen layout plan.
+Business Goal: Streamline the layout planning process for food business licenses/supervision on mobile and allow food safety/hygiene supervisors to centrally review and approve/reject layouts with specific reasons in a standard admin backend.
 
 ## Architecture
 
@@ -47,10 +47,10 @@ Business Goal: Streamline the layout planning process on mobile and centralize a
   ```
 
 ### 4. Admin Review Dashboard
-- Administrators log into the `uni-admin` PC web interface.
-- Navigate to "Floor Plan Approvals" table view.
-- Admins can preview the user's sequential module list. 
-- Admins will update the document's `status` enum to `approved` or `rejected`.
+- Supervisors log into the `uni-admin` PC web interface.
+- Navigate to "Floor Plan Approvals" table view to see pending applications from restaurant owners.
+- Supervisors can preview the submitted sequential module list and layout data.
+- Supervisors update the document's `status` to `approved` or `rejected`, and MUST provide a "reason string" (e.g., "Missing slop bucket", "Layout violates health code") if rejected.
 
 ## Verification & Testing
 1. **Touch Responsiveness:** Test dragging on physical iOS and Android devices via uni-app companion to ensure touch-coordinates translate accurately without scrolling the window.
