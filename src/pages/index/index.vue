@@ -26,10 +26,23 @@ const canSubmit = computed(() => store.modules.length > 0);
 
 function submitForReview() {
   if (!canSubmit.value) return;
-  // This will be fleshed out in Task 4
-  uni.showToast({
-    title: 'Submission simulated',
-    icon: 'success'
+  uni.showLoading({ title: 'Submitting...' });
+  uniCloud.callFunction({
+    name: 'submitLayout',
+    data: {
+      layout_data: store.modules
+    }
+  }).then(res => {
+    uni.hideLoading();
+    if (res.result.code === 200) {
+      uni.showToast({ title: 'Layout Submitted!', icon: 'success' });
+      store.clearLayout();
+    } else {
+      uni.showToast({ title: res.result.message || 'Submission failed', icon: 'error' });
+    }
+  }).catch(err => {
+    uni.hideLoading();
+    uni.showToast({ title: 'Network Error', icon: 'error' });
   });
 }
 </script>

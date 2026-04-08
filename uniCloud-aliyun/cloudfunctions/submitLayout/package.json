@@ -1,0 +1,7 @@
+{
+  "name": "submitLayout",
+  "version": "1.0.0",
+  "description": "Submit a layout floor plan",
+  "main": "index.js",
+  "dependencies": {}
+}
