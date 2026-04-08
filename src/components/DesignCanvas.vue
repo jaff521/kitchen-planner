@@ -4,7 +4,7 @@
       Tap modules below to add to the kitchen layout floor.
     </view>
     
-    <movable-area class="canvas-area-rect" v-else>
+    <view class="canvas-area-rect" v-else>
       <view class="room-walls">
         <view class="wall top"></view>
         <view class="wall left"></view>
@@ -12,32 +12,35 @@
         <view class="wall bottom-left"></view>
         <view class="wall bottom-right"></view>
       </view>
-      <movable-view
-        v-for="module in store.modules"
-        :key="module.id"
-        :class="['canvas-module', 'theme-' + module.type]"
-        direction="all"
-        :x="module.x"
-        :y="module.y"
-        :disabled="resizingId === module.id"
-        :style="{ width: module.width + 'px', height: module.height + 'px' }"
-        @change="onChange($event, module.id)"
-        @longpress="remove(module.id)"
-      >
-        <view class="module-inner">
-          <text class="module-title">{{ formatType(module.type) }}</text>
-          <text class="module-dim">{{ Math.round((module.width / 320) * 400) }}x{{ Math.round((module.height / 400) * 500) }}cm</text>
-        </view>
-        <view 
-          class="resize-handle" 
-          @touchstart.stop.prevent="startResize($event, module)" 
-          @touchmove.stop.prevent="doResize($event, module)"
-          @touchend.stop.prevent="endResize"
-          @touchcancel.stop.prevent="endResize"
+      
+      <movable-area class="playable-area">
+        <movable-view
+          v-for="module in store.modules"
+          :key="module.id"
+          :class="['canvas-module', 'theme-' + module.type]"
+          direction="all"
+          :x="module.x"
+          :y="module.y"
+          :disabled="resizingId === module.id"
+          :style="{ width: module.width + 'px', height: module.height + 'px' }"
+          @change="onChange($event, module.id)"
+          @longpress="remove(module.id)"
         >
-        </view>
-      </movable-view>
-    </movable-area>
+          <view class="module-inner">
+            <text class="module-title">{{ formatType(module.type) }}</text>
+            <text class="module-dim">{{ Math.round((module.width / 320) * 400) }}x{{ Math.round((module.height / 400) * 500) }}cm</text>
+          </view>
+          <view 
+            class="resize-handle" 
+            @touchstart.stop.prevent="startResize($event, module)" 
+            @touchmove.stop.prevent="doResize($event, module)"
+            @touchend.stop.prevent="endResize"
+            @touchcancel.stop.prevent="endResize"
+          >
+          </view>
+        </movable-view>
+      </movable-area>
+    </view>
   </view>
 </template>
 
@@ -128,6 +131,16 @@ function formatType(t) {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.playable-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(90% - 32px); /* accounts for 16px wall on left and right */
+  height: calc(90% - 32px); /* accounts for 16px wall on top and bottom */
+  box-sizing: border-box;
 }
 
 .room-walls {

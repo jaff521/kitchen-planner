@@ -41,19 +41,32 @@
         Rejected Reason: {{ selectedLayout.reject_reason }}
       </view>
 
-      <view class="review-canvas">
-        <view
-          v-for="module in selectedLayout.layout_data"
-          :key="module.id"
-          class="review-module"
-          :style="{
-            left: module.x + 'px',
-            top: module.y + 'px',
-            width: module.width + 'px',
-            height: module.height + 'px'
-          }"
-        >
-          <text>{{ formatType(module.type) }}</text>
+      <view class="review-canvas canvas-area-rect">
+        <view class="room-walls">
+          <view class="wall top"></view>
+          <view class="wall left"></view>
+          <view class="wall right"></view>
+          <view class="wall bottom-left"></view>
+          <view class="wall bottom-right"></view>
+        </view>
+        
+        <view class="playable-area">
+          <view
+            v-for="module in selectedLayout.layout_data"
+            :key="module.id"
+            :class="['review-module', 'canvas-module', 'theme-' + module.type]"
+            :style="{
+              left: module.x + 'px',
+              top: module.y + 'px',
+              width: module.width + 'px',
+              height: module.height + 'px'
+            }"
+          >
+            <view class="module-inner">
+              <text class="module-title">{{ formatType(module.type) }}</text>
+              <text class="module-dim">{{ Math.round((module.width / 320) * 400) }}x{{ Math.round((module.height / 400) * 500) }}cm</text>
+            </view>
+          </view>
         </view>
       </view>
 
@@ -250,21 +263,81 @@ function formatType(t) {
 .review-canvas {
   flex: 1;
   margin: 10px;
-  background-color: #fff;
-  border: 2px dashed #ff9800;
+}
+
+/* Mirroring Canvas Geometry */
+.canvas-area-rect {
+  background-color: #fcfcfc;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  background-image: linear-gradient(#e0e0e0 1px, transparent 1px), linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+  background-size: 20px 20px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.room-walls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  pointer-events: none;
+}
+.wall {
+  position: absolute;
+  background-color: #bcbcbc;
+}
+.wall.top { top: 0; left: 0; right: 0; height: 16px; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+.wall.left { top: 0; left: 0; bottom: 0; width: 16px; }
+.wall.right { top: 0; right: 0; bottom: 0; width: 16px; }
+.wall.bottom-left { bottom: 0; left: 0; width: 30%; height: 16px; border-bottom-left-radius: 4px; }
+.wall.bottom-right { bottom: 0; right: 0; width: 40%; height: 16px; border-bottom-right-radius: 4px; }
+
+.playable-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(90% - 32px);
+  height: calc(90% - 32px);
+  box-sizing: border-box;
+}
+.canvas-module {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  z-index: 10;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.theme-sink { background-color: #c3e8ff; color: #004b75; }
+.theme-worktable { background-color: #b2dfdb; color: #004d40; }
+.theme-slop_bucket { background-color: #ffe0b2; color: #e65100; }
+
+.module-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+.module-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.module-dim {
+  font-size: 8px;
+  opacity: 0.7;
+}
+
 .review-module {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e3f2fd;
-  border: 1px solid #90caf9;
-  font-size: 12px;
-  text-align: center;
-  border-radius: 4px;
 }
 .actions {
   padding: 15px;
