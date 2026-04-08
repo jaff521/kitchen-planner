@@ -1,18 +1,18 @@
 <template>
   <view class="design-canvas">
     <view v-if="store.modules.length === 0" class="empty-state">
-      Tap modules below to add to the kitchen layout floor.
+      轻触下方模块添加到厨房地平面。
     </view>
     
     <view class="canvas-area-rect" v-else>
       <view class="room-walls">
         <view class="compass-indicator">
-          <text class="c-n">N</text>
+          <text class="c-n">北</text>
           <view class="c-lines">
             <view class="c-v"></view>
             <view class="c-h"></view>
           </view>
-          <text class="c-e">E</text>
+          <text class="c-e">东</text>
         </view>
         <view class="wall top"></view>
         <view class="wall left"></view>
@@ -63,8 +63,8 @@ const initialSize = ref({ width: 0, height: 0 });
 
 function remove(id) {
   uni.showModal({
-    title: 'Remove Module',
-    content: 'Are you sure you want to remove this module?',
+    title: '移除模块',
+    content: '您确定要移除该模块吗？',
     success: function (res) {
       if (res.confirm) {
         store.removeModule(id);
@@ -100,14 +100,14 @@ function endResize() {
 
 
 function formatType(t) {
-  if(t === 'sink') return "Sink";
-  if(t === 'slop_bucket') return "Bucket";
-  if(t === 'worktable') return "Worktable";
-  if(t === 'fridge') return "Fridge";
-  if(t === 'cooktop') return "Cooktop";
-  if(t === 'cabinet') return "Cabinet";
-  if(t === 'shelf') return "Shelf";
-  if(t === 'dishwasher') return "Dishwasher";
+  if(t === 'sink') return "水槽";
+  if(t === 'slop_bucket') return "泔水桶";
+  if(t === 'worktable') return "工作台";
+  if(t === 'fridge') return "冰箱";
+  if(t === 'cooktop') return "灶台";
+  if(t === 'cabinet') return "储物柜";
+  if(t === 'shelf') return "货架";
+  if(t === 'dishwasher') return "洗碗机";
   return t;
 }
 </script>

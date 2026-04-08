@@ -3,35 +3,35 @@
     <scroll-view class="tray-scroll" scroll-x="true">
       <view class="tray-item theme-border-sink" @click="add('sink')">
         <view class="tray-icon-box"><view class="tray-icon">🚰</view></view>
-        <text>Sink</text>
+        <text>水槽</text>
       </view>
       <view class="tray-item theme-border-slop_bucket" @click="add('slop_bucket')">
         <view class="tray-icon-box"><view class="tray-icon">🗑️</view></view>
-        <text>Bucket</text>
+        <text>泔水桶</text>
       </view>
       <view class="tray-item theme-border-worktable" @click="add('worktable')">
         <view class="tray-icon-box"><view class="tray-icon">🗄️</view></view>
-        <text>Worktable</text>
+        <text>工作台</text>
       </view>
       <view class="tray-item theme-border-fridge" @click="add('fridge')">
         <view class="tray-icon-box"><view class="tray-icon">🥶</view></view>
-        <text>Fridge</text>
+        <text>冰箱</text>
       </view>
       <view class="tray-item theme-border-cooktop" @click="add('cooktop')">
         <view class="tray-icon-box"><view class="tray-icon">🍳</view></view>
-        <text>Cooktop</text>
+        <text>灶台</text>
       </view>
       <view class="tray-item theme-border-cabinet" @click="add('cabinet')">
         <view class="tray-icon-box"><view class="tray-icon">🗄️</view></view>
-        <text>Cabinet</text>
+        <text>储物柜</text>
       </view>
       <view class="tray-item theme-border-shelf" @click="add('shelf')">
         <view class="tray-icon-box"><view class="tray-icon">🪜</view></view>
-        <text>Shelf</text>
+        <text>货架</text>
       </view>
       <view class="tray-item theme-border-dishwasher" @click="add('dishwasher')">
         <view class="tray-icon-box"><view class="tray-icon">🧼</view></view>
-        <text>Dishwasher</text>
+        <text>洗碗机</text>
       </view>
     </scroll-view>
   </view>

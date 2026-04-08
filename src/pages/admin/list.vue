@@ -1,55 +1,55 @@
 <template>
   <view class="admin-container">
     <view class="header">
-      <text class="title">Supervisor Dashboard Data Management</text>
+      <text class="title">监管大屏数据管理</text>
     </view>
 
     <view v-if="!selectedLayout" class="list-area">
       <view class="tabs">
-        <view class="tab" :class="{active: currentFilter === 'all'}" @click="setFilter('all')">All</view>
-        <view class="tab" :class="{active: currentFilter === 'pending'}" @click="setFilter('pending')">Pending</view>
-        <view class="tab" :class="{active: currentFilter === 'approved'}" @click="setFilter('approved')">Approved</view>
-        <view class="tab" :class="{active: currentFilter === 'rejected'}" @click="setFilter('rejected')">Rejected</view>
+        <view class="tab" :class="{active: currentFilter === 'all'}" @click="setFilter('all')">全部</view>
+        <view class="tab" :class="{active: currentFilter === 'pending'}" @click="setFilter('pending')">待审核</view>
+        <view class="tab" :class="{active: currentFilter === 'approved'}" @click="setFilter('approved')">已通过</view>
+        <view class="tab" :class="{active: currentFilter === 'rejected'}" @click="setFilter('rejected')">已驳回</view>
       </view>
 
-      <view v-if="loading" class="loading">Loading layouts...</view>
-      <view v-else-if="layouts.length === 0" class="empty">No submissions found.</view>
+      <view v-if="loading" class="loading">加载布局中...</view>
+      <view v-else-if="layouts.length === 0" class="empty">未找到提交记录。</view>
       
       <view class="layout-card" v-for="item in layouts" :key="item._id" @click="selectLayout(item)">
         <view class="card-top">
-          <text class="card-id">ID: {{ item._id.substr(0, 8) }}...</text>
-          <text class="status-badge" :class="item.status">{{ item.status }}</text>
+          <text class="card-id">编号: {{ item._id.substr(0, 8) }}...</text>
+          <text class="status-badge" :class="item.status">{{ formatStatus(item.status) }}</text>
         </view>
         <view class="card-bottom">
           <text class="card-date">{{ new Date(item.created_at).toLocaleString() }}</text>
-          <text class="card-count">{{ item.layout_data.length }} modules</text>
+          <text class="card-count">{{ item.layout_data.length }} 个模块</text>
         </view>
         <view v-if="item.status === 'rejected'" class="reject-reason">
-          Reason: {{ item.reject_reason }}
+          原因: {{ item.reject_reason }}
         </view>
       </view>
     </view>
 
     <view v-else class="review-area">
       <view class="review-header">
-        <button class="btn back-btn" size="mini" @click="selectedLayout = null">Back</button>
-        <text>Reviewing: {{ selectedLayout._id.substr(0,8) }}</text>
-        <text class="status-badge" :class="selectedLayout.status" style="margin-left:auto">{{ selectedLayout.status }}</text>
+        <button class="btn back-btn" size="mini" @click="selectedLayout = null">返回</button>
+        <text>审核中: {{ selectedLayout._id.substr(0,8) }}</text>
+        <text class="status-badge" :class="selectedLayout.status" style="margin-left:auto">{{ formatStatus(selectedLayout.status) }}</text>
       </view>
 
       <view v-if="selectedLayout.status === 'rejected'" class="reject-reason full-width">
-        Rejected Reason: {{ selectedLayout.reject_reason }}
+        驳回原因: {{ selectedLayout.reject_reason }}
       </view>
 
       <view class="review-canvas canvas-area-rect">
         <view class="room-walls">
           <view class="compass-indicator">
-            <text class="c-n">N</text>
+            <text class="c-n">北</text>
             <view class="c-lines">
               <view class="c-v"></view>
               <view class="c-h"></view>
             </view>
-            <text class="c-e">E</text>
+            <text class="c-e">东</text>
           </view>
           <view class="wall top"></view>
           <view class="wall left"></view>
@@ -79,11 +79,11 @@
       </view>
 
       <view v-if="selectedLayout.status === 'pending'" class="actions">
-        <button type="primary" class="btn approve-btn" @click="handleAction('approved')">Approve</button>
-        <button type="warn" class="btn reject-btn" @click="promptReject">Reject</button>
+        <button type="primary" class="btn approve-btn" @click="handleAction('approved')">通过</button>
+        <button type="warn" class="btn reject-btn" @click="promptReject">驳回</button>
       </view>
       <view v-else class="actions read-only">
-        <text>This layout has already been processed.</text>
+        <text>该布局已被处理。</text>
       </view>
     </view>
   </view>
@@ -124,21 +124,21 @@ function selectLayout(item) {
 
 function promptReject() {
   uni.showModal({
-    title: 'Reject Layout',
-    content: 'Please enter rejection reason:',
+    title: '驳回布局',
+    content: '请输入驳回原因:',
     editable: true,
     success: (res) => {
       if(res.confirm && res.content) {
         handleAction('rejected', res.content);
       } else if (res.confirm && !res.content) {
-        uni.showToast({ title: 'Reason is required', icon: 'none' });
+        uni.showToast({ title: '必须输入驳回原因', icon: 'none' });
       }
     }
   });
 }
 
 function handleAction(status, reject_reason = '') {
-  uni.showLoading({ title: 'Processing' });
+  uni.showLoading({ title: '处理中' });
   mockCallFunction({
     name: 'reviewLayout',
     data: {
@@ -150,22 +150,29 @@ function handleAction(status, reject_reason = '') {
   }).then(res => {
     uni.hideLoading();
     if(res.result.code === 200) {
-      uni.showToast({ title: 'Success', icon: 'success' });
+      uni.showToast({ title: '操作成功', icon: 'success' });
       selectedLayout.value = null;
       fetchLayouts();
     }
   });
 }
 
+function formatStatus(status) {
+  if (status === 'pending') return '待审核';
+  if (status === 'approved') return '已通过';
+  if (status === 'rejected') return '已驳回';
+  return status;
+}
+
 function formatType(t) {
-  if(t === 'sink') return "Sink";
-  if(t === 'slop_bucket') return "Bucket";
-  if(t === 'worktable') return "Worktable";
-  if(t === 'fridge') return "Fridge";
-  if(t === 'cooktop') return "Cooktop";
-  if(t === 'cabinet') return "Cabinet";
-  if(t === 'shelf') return "Shelf";
-  if(t === 'dishwasher') return "Dishwasher";
+  if(t === 'sink') return "水槽";
+  if(t === 'slop_bucket') return "泔水桶";
+  if(t === 'worktable') return "工作台";
+  if(t === 'fridge') return "冰箱";
+  if(t === 'cooktop') return "灶台";
+  if(t === 'cabinet') return "储物柜";
+  if(t === 'shelf') return "货架";
+  if(t === 'dishwasher') return "洗碗机";
   return t;
 }
 </script>

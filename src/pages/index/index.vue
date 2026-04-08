@@ -8,7 +8,7 @@
     </view>
     <view class="submit-area">
       <button class="submit-btn" :class="{ disabled: !canSubmit }" @click="submitForReview">
-        Submit for Review
+        提交审核
       </button>
     </view>
   </view>
@@ -27,7 +27,7 @@ const canSubmit = computed(() => store.modules.length > 0);
 
 function submitForReview() {
   if (!canSubmit.value) return;
-  uni.showLoading({ title: 'Submitting...' });
+  uni.showLoading({ title: '提交中...' });
   mockCallFunction({
     name: 'submitLayout',
     data: {
@@ -36,14 +36,14 @@ function submitForReview() {
   }).then(res => {
     uni.hideLoading();
     if (res.result.code === 200) {
-      uni.showToast({ title: 'Layout Submitted!', icon: 'success' });
+      uni.showToast({ title: '布局已提交！', icon: 'success' });
       store.clearLayout();
     } else {
-      uni.showToast({ title: res.result.message || 'Submission failed', icon: 'error' });
+      uni.showToast({ title: res.result.message || '提交失败', icon: 'error' });
     }
   }).catch(err => {
     uni.hideLoading();
-    uni.showToast({ title: 'Network Error', icon: 'error' });
+    uni.showToast({ title: '网络错误', icon: 'error' });
   });
 }
 </script>
