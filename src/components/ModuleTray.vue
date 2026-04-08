@@ -28,6 +28,7 @@ function add(type) {
 
 <style scoped>
 .module-tray {
+  box-sizing: border-box;
   height: 100%;
   padding: 20px 15px;
   background-color: #ffffff;
