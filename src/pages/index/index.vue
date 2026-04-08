@@ -63,24 +63,24 @@ page {
   flex: 1;
 }
 .tray-area {
-  height: 160px;
+  height: 124px;
   flex-shrink: 0;
   z-index: 100;
 }
 .submit-area {
-  height: 90px;
+  height: 80px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 20px;
   background-color: #ffffff;
-  padding-bottom: 20px;
+  padding-bottom: 12px;
 }
 .submit-btn {
   width: 100%;
-  height: 56px;
-  border-radius: 28px;
+  height: 48px;
+  border-radius: 24px;
   background: linear-gradient(135deg, #283593, #3f51b5);
   color: #ffffff;
   font-size: 16px;

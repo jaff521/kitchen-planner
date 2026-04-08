@@ -50,7 +50,7 @@ function add(type) {
 .module-tray {
   box-sizing: border-box;
   height: 100%;
-  padding: 20px 15px;
+  padding: 12px 10px;
   background-color: #ffffff;
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
@@ -84,8 +84,8 @@ function add(type) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90px;
-  height: 90px;
+  width: 76px;
+  height: 76px;
   background-color: #fcfcfc;
   border-radius: 16px;
   margin-right: 12px;
@@ -113,7 +113,7 @@ function add(type) {
   margin-bottom: 6px;
 }
 .tray-icon {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .tray-item:active {

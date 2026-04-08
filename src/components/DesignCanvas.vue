@@ -207,11 +207,11 @@ function formatType(t) {
   right: 24px;
   width: 40px;
   height: 40px;
-  opacity: 0.6;
+  opacity: 0.8;
   pointer-events: none;
-  font-size: 10px;
-  font-weight: bold;
-  color: #c5c5c5;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9e9e9e;
 }
 .c-n { position: absolute; top: -14px; left: 16px; }
 .c-e { position: absolute; right: -12px; top: 14px; }
