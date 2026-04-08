@@ -6,6 +6,14 @@
     
     <view class="canvas-area-rect" v-else>
       <view class="room-walls">
+        <view class="compass-indicator">
+          <text class="c-n">N</text>
+          <view class="c-lines">
+            <view class="c-v"></view>
+            <view class="c-h"></view>
+          </view>
+          <text class="c-e">E</text>
+        </view>
         <view class="wall top"></view>
         <view class="wall left"></view>
         <view class="wall right"></view>
@@ -93,8 +101,13 @@ function endResize() {
 
 function formatType(t) {
   if(t === 'sink') return "Sink";
-  if(t === 'slop_bucket') return "Slop Bucket";
+  if(t === 'slop_bucket') return "Bucket";
   if(t === 'worktable') return "Worktable";
+  if(t === 'fridge') return "Fridge";
+  if(t === 'cooktop') return "Cooktop";
+  if(t === 'cabinet') return "Cabinet";
+  if(t === 'shelf') return "Shelf";
+  if(t === 'dishwasher') return "Dishwasher";
   return t;
 }
 </script>
@@ -182,6 +195,33 @@ function formatType(t) {
 .theme-sink { background-color: #c3e8ff; color: #004b75; }
 .theme-worktable { background-color: #b2dfdb; color: #004d40; }
 .theme-slop_bucket { background-color: #ffe0b2; color: #e65100; }
+.theme-fridge { background-color: #c8e6c9; color: #1b5e20; }
+.theme-cooktop { background-color: #ffccbc; color: #bf360c; }
+.theme-cabinet { background-color: #e1bee7; color: #4a148c; }
+.theme-shelf { background-color: #d7ccc8; color: #3e2723; }
+.theme-dishwasher { background-color: #cfd8dc; color: #263238; }
+
+.compass-indicator {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  opacity: 0.6;
+  pointer-events: none;
+  font-size: 10px;
+  font-weight: bold;
+  color: #c5c5c5;
+}
+.c-n { position: absolute; top: -14px; left: 16px; }
+.c-e { position: absolute; right: -12px; top: 14px; }
+.c-lines {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.c-v { position: absolute; left: 19px; width: 2px; height: 100%; background: #c5c5c5; }
+.c-h { position: absolute; top: 19px; height: 2px; width: 100%; background: #c5c5c5; }
 
 .module-inner {
   display: flex;

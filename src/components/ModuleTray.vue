@@ -13,6 +13,26 @@
         <view class="tray-icon-box"><view class="tray-icon">🗄️</view></view>
         <text>Worktable</text>
       </view>
+      <view class="tray-item theme-border-fridge" @click="add('fridge')">
+        <view class="tray-icon-box"><view class="tray-icon">🥶</view></view>
+        <text>Fridge</text>
+      </view>
+      <view class="tray-item theme-border-cooktop" @click="add('cooktop')">
+        <view class="tray-icon-box"><view class="tray-icon">🍳</view></view>
+        <text>Cooktop</text>
+      </view>
+      <view class="tray-item theme-border-cabinet" @click="add('cabinet')">
+        <view class="tray-icon-box"><view class="tray-icon">🗄️</view></view>
+        <text>Cabinet</text>
+      </view>
+      <view class="tray-item theme-border-shelf" @click="add('shelf')">
+        <view class="tray-icon-box"><view class="tray-icon">🪜</view></view>
+        <text>Shelf</text>
+      </view>
+      <view class="tray-item theme-border-dishwasher" @click="add('dishwasher')">
+        <view class="tray-icon-box"><view class="tray-icon">🧼</view></view>
+        <text>Dishwasher</text>
+      </view>
     </scroll-view>
   </view>
 </template>
@@ -78,6 +98,11 @@ function add(type) {
 .tray-item.theme-border-sink { border: 2px solid #90caf9; }
 .tray-item.theme-border-slop_bucket { border: 2px solid #ffcc80; }
 .tray-item.theme-border-worktable { border: 2px solid #80cbc4; }
+.tray-item.theme-border-fridge { border: 2px solid #a5d6a7; }
+.tray-item.theme-border-cooktop { border: 2px solid #ffab91; }
+.tray-item.theme-border-cabinet { border: 2px solid #ce93d8; }
+.tray-item.theme-border-shelf { border: 2px solid #bcaaa4; }
+.tray-item.theme-border-dishwasher { border: 2px solid #b0bec5; }
 
 .tray-icon-box {
   width: 36px;

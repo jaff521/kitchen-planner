@@ -7,7 +7,12 @@ export const useLayoutStore = defineStore('layout', {
     moduleWidths: {
       sink: 80,
       slop_bucket: 64,
-      worktable: 120
+      worktable: 120,
+      fridge: 70,
+      cooktop: 60,
+      cabinet: 100,
+      shelf: 90,
+      dishwasher: 60
     }
   }),
   actions: {
