@@ -1,48 +1,63 @@
 <template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
+  <view class="container">
+    <view class="canvas-area">
+      <DesignCanvas />
+    </view>
+    <view class="tray-area">
+      <ModuleTray />
+    </view>
+    <view class="submit-area">
+      <button class="submit-btn" type="primary" @click="submitForReview" :disabled="!canSubmit">
+        Submit for Review
+      </button>
     </view>
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      title: 'Hello',
-    }
-  },
-  onLoad() {},
-  methods: {},
+<script setup>
+import { computed } from 'vue';
+import { useLayoutStore } from '@/store/layout';
+import DesignCanvas from '@/components/DesignCanvas.vue';
+import ModuleTray from '@/components/ModuleTray.vue';
+
+const store = useLayoutStore();
+
+const canSubmit = computed(() => store.modules.length > 0);
+
+function submitForReview() {
+  if (!canSubmit.value) return;
+  // This will be fleshed out in Task 4
+  uni.showToast({
+    title: 'Submission simulated',
+    icon: 'success'
+  });
 }
 </script>
 
 <style>
-.content {
+page {
+  height: 100%;
+}
+.container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+}
+.canvas-area {
+  flex: 6; /* 60% approx taking account button */
+}
+.tray-area {
+  flex: 3; /* 30% approx */
+}
+.submit-area {
+  flex: 1; /* 10% approx */
+  display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
+  background-color: #fff;
 }
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
+.submit-btn {
+  width: 90%;
 }
 </style>
