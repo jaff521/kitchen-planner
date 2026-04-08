@@ -1,14 +1,16 @@
 <template>
   <view class="module-tray">
-    <view class="tray-title">Available Modules (Tap to Add)</view>
     <scroll-view class="tray-scroll" scroll-x="true">
-      <view class="tray-item" @click="add('sink')">
+      <view class="tray-item theme-border-sink" @click="add('sink')">
+        <view class="tray-icon-box"><view class="tray-icon">🚰</view></view>
         <text>Sink</text>
       </view>
-      <view class="tray-item" @click="add('slop_bucket')">
-        <text>Slop Bucket</text>
+      <view class="tray-item theme-border-slop_bucket" @click="add('slop_bucket')">
+        <view class="tray-icon-box"><view class="tray-icon">🗑️</view></view>
+        <text>Bucket</text>
       </view>
-      <view class="tray-item" @click="add('worktable')">
+      <view class="tray-item theme-border-worktable" @click="add('worktable')">
+        <view class="tray-icon-box"><view class="tray-icon">🗄️</view></view>
         <text>Worktable</text>
       </view>
     </scroll-view>
@@ -58,23 +60,38 @@ function add(type) {
 }
 .tray-item {
   display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 90px;
   height: 90px;
-  background-color: #f8f9fa;
-  border: 1px solid #e0e0e0;
+  background-color: #fcfcfc;
   border-radius: 16px;
   margin-right: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
   transition: all 0.2s ease;
   color: #424242;
   font-weight: 500;
   font-size: 14px;
 }
+.tray-item.theme-border-sink { border: 2px solid #90caf9; }
+.tray-item.theme-border-slop_bucket { border: 2px solid #ffcc80; }
+.tray-item.theme-border-worktable { border: 2px solid #80cbc4; }
+
+.tray-icon-box {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.tray-icon {
+  font-size: 24px;
+}
+
 .tray-item:active {
   background-color: #e3f2fd;
-  border-color: #90caf9;
   color: #1976d2;
   transform: scale(0.95);
 }

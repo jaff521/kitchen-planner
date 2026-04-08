@@ -5,6 +5,13 @@
     </view>
     
     <movable-area class="canvas-area-rect" v-else>
+      <view class="room-walls">
+        <view class="wall top"></view>
+        <view class="wall left"></view>
+        <view class="wall right"></view>
+        <view class="wall bottom-left"></view>
+        <view class="wall bottom-right"></view>
+      </view>
       <movable-view
         v-for="module in store.modules"
         :key="module.id"
@@ -18,7 +25,8 @@
         @longpress="remove(module.id)"
       >
         <view class="module-inner">
-          <text>{{ formatType(module.type) }}</text>
+          <text class="module-title">{{ formatType(module.type) }}</text>
+          <text class="module-dim">{{ Math.round((module.width / 320) * 400) }}x{{ Math.round((module.height / 400) * 500) }}cm</text>
         </view>
         <view 
           class="resize-handle" 
@@ -117,7 +125,30 @@ function formatType(t) {
   background-size: 20px 20px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.room-walls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  pointer-events: none;
+}
+.wall {
+  position: absolute;
+  background-color: #bcbcbc;
+}
+.wall.top { top: 0; left: 0; right: 0; height: 16px; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+.wall.left { top: 0; left: 0; bottom: 0; width: 16px; }
+.wall.right { top: 0; right: 0; bottom: 0; width: 16px; }
+.wall.bottom-left { bottom: 0; left: 0; width: 30%; height: 16px; border-bottom-left-radius: 4px; }
+.wall.bottom-right { bottom: 0; right: 0; width: 40%; height: 16px; border-bottom-right-radius: 4px; }
+
 
 .canvas-module {
   display: flex;
@@ -143,10 +174,17 @@ function formatType(t) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 14px;
-  font-weight: 500;
   text-align: center;
   pointer-events: none;
+}
+.module-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.module-dim {
+  font-size: 8px;
+  opacity: 0.7;
 }
 
 .resize-handle {
