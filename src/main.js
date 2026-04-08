@@ -25,8 +25,12 @@ if (typeof uniCloud !== 'undefined') {
         
         if (args.name === 'reviewLayout') {
           if (args.data.action === 'list') {
-            const pending = db.filter(d => d.status === 'pending').sort((a,b)=>b.created_at - a.created_at);
-            resolve({ result: { code: 200, data: pending } });
+            let resData = db;
+            if (args.data.statusFilter && args.data.statusFilter !== 'all') {
+              resData = db.filter(d => d.status === args.data.statusFilter);
+            }
+            resData = resData.sort((a,b)=>b.created_at - a.created_at);
+            resolve({ result: { code: 200, data: resData } });
           } else if (args.data.action === 'update') {
             const index = db.findIndex(d => d._id === args.data.id);
             if(index !== -1) {
