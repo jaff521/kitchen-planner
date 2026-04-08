@@ -1,0 +1,7 @@
+{
+  "name": "reviewLayout",
+  "version": "1.0.0",
+  "description": "Review layout plans dashboard API",
+  "main": "index.js",
+  "dependencies": {}
+}
