@@ -8,7 +8,7 @@
       <movable-view
         v-for="module in store.modules"
         :key="module.id"
-        class="canvas-module"
+        :class="['canvas-module', 'theme-' + module.type]"
         direction="all"
         :x="module.x"
         :y="module.y"
@@ -92,24 +92,29 @@ function formatType(t) {
 .design-canvas {
   height: 100%;
   width: 100%;
-  background-color: #ededed;
+  background-color: #f5f5f6;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 15px;
   box-sizing: border-box;
 }
 
 .empty-state {
-  color: #999;
-  font-size: 14px;
+  color: #8e8e93;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
 }
 
 .canvas-area-rect {
   width: 100%;
   height: 100%;
-  background-color: #fff;
-  border: 2px dashed #007bff;
+  background-color: #fcfcfc;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  background-image: linear-gradient(#e0e0e0 1px, transparent 1px), linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+  background-size: 20px 20px;
   position: relative;
   overflow: hidden;
 }
@@ -118,22 +123,28 @@ function formatType(t) {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e3f2fd;
-  border: 1px solid #90caf9;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 12px;
   z-index: 10;
+  transition: box-shadow 0.2s ease;
+  border: 1px solid rgba(255,255,255,0.4);
 }
 .canvas-module:active {
-  opacity: 0.8;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   z-index: 100;
 }
+
+/* Material Color Themes */
+.theme-sink { background-color: #c3e8ff; color: #004b75; }
+.theme-worktable { background-color: #b2dfdb; color: #004d40; }
+.theme-slop_bucket { background-color: #ffe0b2; color: #e65100; }
 
 .module-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
   text-align: center;
   pointer-events: none;
 }
@@ -142,18 +153,19 @@ function formatType(t) {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-color: transparent;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 6px;
 }
 .resize-handle::after {
   content: '';
-  position: absolute;
-  right: 3px;
-  bottom: 3px;
-  width: 10px;
-  height: 10px;
-  border-right: 2px solid #007bff;
-  border-bottom: 2px solid #007bff;
+  width: 8px;
+  height: 8px;
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 50%;
 }
 </style>

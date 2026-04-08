@@ -1,5 +1,10 @@
 <template>
   <view class="container">
+    <view class="app-header">
+      <view class="header-icon">kitchen</view>
+      <text class="header-title">Kitchen Planner</text>
+      <view class="header-avatar"></view>
+    </view>
     <view class="canvas-area">
       <DesignCanvas />
     </view>
@@ -7,7 +12,7 @@
       <ModuleTray />
     </view>
     <view class="submit-area">
-      <button class="submit-btn" type="primary" @click="submitForReview" :disabled="!canSubmit">
+      <button class="submit-btn" :class="{ disabled: !canSubmit }" @click="submitForReview">
         Submit for Review
       </button>
     </view>
@@ -56,22 +61,71 @@ page {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #f5f5f6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background-color: #f5f5f6;
+  padding-top: var(--status-bar-height, 20px);
+}
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a24;
+}
+.header-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background-color: #e0e0e0;
+}
+.header-icon {
+  width: 32px;
 }
 .canvas-area {
-  flex: 6; /* 60% approx taking account button */
+  flex: 1;
 }
 .tray-area {
-  flex: 3; /* 30% approx */
+  height: 160px;
+  flex-shrink: 0;
+  z-index: 100;
 }
 .submit-area {
-  flex: 1; /* 10% approx */
+  height: 90px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  background-color: #fff;
+  padding: 0 20px;
+  background-color: #ffffff;
+  padding-bottom: 20px;
 }
 .submit-btn {
-  width: 90%;
+  width: 100%;
+  height: 56px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #283593, #3f51b5);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+  border: none;
+  transition: all 0.2s ease;
+}
+.submit-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 6px rgba(63, 81, 181, 0.3);
+}
+.submit-btn.disabled {
+  background: #e0e0e0;
+  color: #9e9e9e;
+  box-shadow: none;
 }
 </style>
