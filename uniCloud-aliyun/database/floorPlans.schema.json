@@ -1,0 +1,48 @@
+{
+  "bsonType": "object",
+  "required": ["user_id", "layout_data", "status", "created_at"],
+  "permission": {
+    "read": "doc.user_id == auth.uid || 'admin' in auth.role",
+    "create": "auth.uid != null",
+    "update": "doc.user_id == auth.uid || 'admin' in auth.role",
+    "delete": "doc.user_id == auth.uid || 'admin' in auth.role"
+  },
+  "properties": {
+    "_id": {
+      "description": "ID",
+      "bsonType": "string"
+    },
+    "user_id": {
+      "description": "User ID matching uni-id",
+      "bsonType": "string",
+      "forceDefaultValue": {
+        "$env": "uid"
+      }
+    },
+    "layout_data": {
+      "description": "Array of modules in the layout",
+      "bsonType": "array",
+      "items": {
+        "bsonType": "object"
+      }
+    },
+    "status": {
+      "description": "Approval status (pending, approved, rejected)",
+      "bsonType": "string",
+      "enum": ["pending", "approved", "rejected"],
+      "defaultValue": "pending"
+    },
+    "reject_reason": {
+      "description": "Reason for rejection by supervisor",
+      "bsonType": "string",
+      "defaultValue": ""
+    },
+    "created_at": {
+      "description": "Creation timestamp",
+      "bsonType": "timestamp",
+      "forceDefaultValue": {
+        "$env": "now"
+      }
+    }
+  }
+}
