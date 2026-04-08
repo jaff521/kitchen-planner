@@ -1,7 +1,7 @@
 # Kitchen Layout Planner Design Spec
 
 ## Overview
-A mobile application built on `uni-app` (Vue 3) that allows users to create simple kitchen floor plans by dragging and dropping predefined modules (sinks, slop buckets, worktables, etc.) into a canvas area. The canvas automatically scales modules to fill a horizontal space perfectly. The layouts are submitted to a `uniCloud` backend where administrators can review and approve them via a `uni-admin` desktop dashboard.
+A mobile application built on `uni-app` (Vue 3) that allows users to create simple kitchen floor plans by dragging and dropping predefined modules (sinks, slop buckets, worktables, etc.) into a canvas area. The canvas automatically scales modules to fill a horizontal space perfectly. The layouts are submitted to a `uniCloud` backend where food safety/hygiene supervisors can review and approve/reject them via a `uni-admin` desktop dashboard.
 
 ## Context
 Target Users: Restaurant owners or food business applicants who need to submit a kitchen layout plan.
@@ -42,6 +42,7 @@ Business Goal: Streamline the layout planning process for food business licenses
       { "type": "worktable", "order": 2, "width_weight": 2 }
     ],
     "status": "pending",
+    "reject_reason": "",
     "created_at": 1700101010
   }
   ```
