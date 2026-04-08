@@ -3,11 +3,11 @@ import { defineStore } from 'pinia';
 export const useLayoutStore = defineStore('layout', {
   state: () => ({
     modules: [],
-    // Map of weights for auto-scaling
-    moduleWeights: {
-      sink: 1,
-      slop_bucket: 0.8,
-      worktable: 2
+    // Base widths instead of weights now since we are 2D
+    moduleWidths: {
+      sink: 80,
+      slop_bucket: 64,
+      worktable: 120
     }
   }),
   actions: {
@@ -15,8 +15,18 @@ export const useLayoutStore = defineStore('layout', {
       this.modules.push({
         id: Date.now() + Math.random().toString(36).substr(2, 9),
         type,
-        width_weight: this.moduleWeights[type] || 1
+        width: this.moduleWidths[type] || 80,
+        height: 80, // fixed height for modules
+        x: 100, // spawn at center-ish
+        y: 100
       });
+    },
+    updatePosition(id, x, y) {
+      const module = this.modules.find(m => m.id === id);
+      if (module) {
+        module.x = x;
+        module.y = y;
+      }
     },
     removeModule(id) {
       const index = this.modules.findIndex(m => m.id === id);

@@ -1,23 +1,26 @@
 <template>
   <view class="design-canvas">
     <view v-if="store.modules.length === 0" class="empty-state">
-      Tap modules below to add to the kitchen layout.
+      Tap modules below to add to the kitchen layout floor.
     </view>
     
-    <view class="canvas-row" v-else>
-      <view
+    <movable-area class="canvas-area-rect" v-else>
+      <movable-view
         v-for="module in store.modules"
         :key="module.id"
         class="canvas-module"
-        :style="{ flexGrow: module.width_weight }"
+        direction="all"
+        :x="module.x"
+        :y="module.y"
+        :style="{ width: module.width + 'px', height: module.height + 'px' }"
+        @change="onChange($event, module.id)"
         @longpress="remove(module.id)"
       >
         <view class="module-inner">
           <text>{{ formatType(module.type) }}</text>
-          <text class="module-hint">Long press to delete</text>
         </view>
-      </view>
-    </view>
+      </movable-view>
+    </movable-area>
   </view>
 </template>
 
@@ -35,6 +38,12 @@ function remove(id) {
       }
     }
   });
+}
+
+function onChange(e, id) {
+  if (e.detail && e.detail.source === 'touch') {
+    store.updatePosition(id, e.detail.x, e.detail.y);
+  }
 }
 
 function formatType(t) {
@@ -62,39 +71,36 @@ function formatType(t) {
   font-size: 14px;
 }
 
-.canvas-row {
-  display: flex;
-  flex-direction: row;
+.canvas-area-rect {
   width: 100%;
-  height: 120px;
+  height: 100%;
   background-color: #fff;
   border: 2px dashed #007bff;
+  position: relative;
+  overflow: hidden;
 }
 
 .canvas-module {
-  /* Flex grow dynamically matches width_weight from pinia store */
-  flex-basis: 0;
-  border-right: 1px solid #ddd;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #e3f2fd;
-  transition: all 0.3s ease;
+  border: 1px solid #90caf9;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  z-index: 10;
 }
-.canvas-module:last-child {
-  border-right: none;
+.canvas-module:active {
+  opacity: 0.8;
+  z-index: 100;
 }
 
 .module-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.module-hint {
-  font-size: 10px;
-  color: #666;
-  margin-top: 5px;
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none; /* Let drag pass through to movable-view */
 }
 </style>
