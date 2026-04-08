@@ -1,10 +1,5 @@
 <template>
   <view class="container">
-    <view class="app-header">
-      <view class="header-icon">kitchen</view>
-      <text class="header-title">Kitchen Planner</text>
-      <view class="header-avatar"></view>
-    </view>
     <view class="canvas-area">
       <DesignCanvas />
     </view>
@@ -63,28 +58,6 @@ page {
   height: 100%;
   background-color: #f5f5f6;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  background-color: #f5f5f6;
-  padding-top: var(--status-bar-height, 20px);
-}
-.header-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a24;
-}
-.header-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-  background-color: #e0e0e0;
-}
-.header-icon {
-  width: 32px;
 }
 .canvas-area {
   flex: 1;
