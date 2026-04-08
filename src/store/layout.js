@@ -28,6 +28,14 @@ export const useLayoutStore = defineStore('layout', {
         module.y = y;
       }
     },
+    updateSize(id, width, height) {
+      const module = this.modules.find(m => m.id === id);
+      if (module) {
+        // Enforce minimum sizes so it doesn't disappear
+        module.width = Math.max(width, 40);
+        module.height = Math.max(height, 40);
+      }
+    },
     removeModule(id) {
       const index = this.modules.findIndex(m => m.id === id);
       if (index !== -1) {

@@ -19,14 +19,25 @@
         <view class="module-inner">
           <text>{{ formatType(module.type) }}</text>
         </view>
+        <view 
+          class="resize-handle" 
+          @touchstart.stop.prevent="startResize($event, module)" 
+          @touchmove.stop.prevent="doResize($event, module)"
+        >
+        </view>
       </movable-view>
     </movable-area>
   </view>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useLayoutStore } from '@/store/layout';
 const store = useLayoutStore();
+
+const resizingId = ref(null);
+const initialTouch = ref({ x: 0, y: 0 });
+const initialSize = ref({ width: 0, height: 0 });
 
 function remove(id) {
   uni.showModal({
@@ -41,9 +52,24 @@ function remove(id) {
 }
 
 function onChange(e, id) {
-  if (e.detail && e.detail.source === 'touch') {
+  if (e.detail && e.detail.source === 'touch' && resizingId.value !== id) {
     store.updatePosition(id, e.detail.x, e.detail.y);
   }
+}
+
+function startResize(e, module) {
+  resizingId.value = module.id;
+  initialTouch.value = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  initialSize.value = { width: module.width, height: module.height };
+}
+
+function doResize(e, module) {
+  if (resizingId.value !== module.id) return;
+  const currentTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  const deltaX = currentTouch.x - initialTouch.value.x;
+  const deltaY = currentTouch.y - initialTouch.value.y;
+  
+  store.updateSize(module.id, initialSize.value.width + deltaX, initialSize.value.height + deltaY);
 }
 
 function formatType(t) {
@@ -101,6 +127,25 @@ function formatType(t) {
   align-items: center;
   font-size: 12px;
   text-align: center;
-  pointer-events: none; /* Let drag pass through to movable-view */
+  pointer-events: none;
+}
+
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+}
+.resize-handle::after {
+  content: '';
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #007bff;
+  border-bottom: 2px solid #007bff;
 }
 </style>
